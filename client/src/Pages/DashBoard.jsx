@@ -1,8 +1,11 @@
 import React from 'react'
+import HeaderBar from '../Component/HeaderBar'
 
 const DashBoard = () => {
   return (
-    <div>DashBoard</div>
+    <div>
+      <HeaderBar/>
+    </div>
   )
 }
 

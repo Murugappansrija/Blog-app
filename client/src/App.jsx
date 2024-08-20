@@ -10,7 +10,7 @@ import HeaderBar from './Component/HeaderBar';
 function App() {
   return (
     <BrowserRouter>
-    <HeaderBar/>
+    
     <Routes>
       <Route path="/" element={<Home/>}/>
       <Route path="/login" element={<Login/>}/>

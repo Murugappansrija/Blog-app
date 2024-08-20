@@ -1,8 +1,9 @@
 import React from 'react'
+import HeaderBar from '../Component/HeaderBar'
 
 const About = () => {
   return (
-    <div>About</div>
+    <div><HeaderBar/></div>
   )
 }
 
