@@ -14,7 +14,7 @@ const Register = () => {
     const { name, value } = target;
     setForm({ ...form, [name]: value.trim() });
   };
-  const errorMessages = (message, sec) => {
+  const errorHelper = (message, sec) => {
     setErrorMessage(message);
     setTimeout(() => {
       setErrorMessage(null);
@@ -26,7 +26,7 @@ const Register = () => {
     const url = "http://localhost:4000/user/create";
 
     if (!form.email_id || !form.user_name || !form.password) {
-      errorMessages("Please Fill  Field", 3000);
+      errorHelper("Please Fill  Field", 3000);
     }
 
     try {
@@ -50,22 +50,23 @@ const Register = () => {
         }, 2000);
       }
       if (data.statusCode === 409) {
-        errorMessages("Email ID  Exists", 2000);
+        errorHelper("Email ID  Exists", 2000);
       }
       if (data.statusCode === 500) {
-        errorMessages("Something Wrong", 3000);
+        errorHelper("Something Wrong", 3000);
       }
       setLoading(false);
     } catch (error) {
-      errorMessages(error.message, 3000);
+      errorHelper(error.message, 3000);
       setLoading(false);
     }
   };
 
   return (
     <React.Fragment>
-      <div className="h-dvh flex justify-center items-center bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500">
-        <div className="container w-4/12 h-5/6 bg-slate-50 rounded-lg">
+      <div className="h-dvh flex justify-center items-center ">
+        {/* bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 */}
+        <div className="w-full sm:w-full md:w-6/12 xl:w-4/12 h-5/6 rounded-md bg-slate-100 container">
           <div className="flex gap-3 flex-col items-center">
             <h6 className="mt-4 mb-4 font-bold text-xl">Register</h6>
             <form
@@ -76,7 +77,7 @@ const Register = () => {
                 <label className="font-semibold">User Name</label>
                 <input
                   placeholder="John Doe"
-                  className="bg-gray-200 py-1.5 px-4 rounded-xl"
+                  className=" py-1.5 px-4 border-1 border-slate-200 rounded-md"
                   name="user_name"
                   value={form.user_name}
                   type="text"
@@ -87,7 +88,7 @@ const Register = () => {
                 <label className="font-semibold">Email</label>
                 <input
                   placeholder="example12@gmail.com"
-                  className="bg-gray-200 py-1.5 px-4 w-full rounded-xl"
+                  className=" py-1.5 px-4 w-full rounded-md  border-slate-200"
                   name="email_id"
                   type="email"
                   value={form.email_id}
@@ -98,7 +99,7 @@ const Register = () => {
                 <label className="font-semibold">Password</label>
                 <input
                   placeholder="*********"
-                  className="bg-gray-200 py-1.5 px-4 w-full rounded-xl"
+                  className=" py-1.5 px-4 w-full rounded-md border-slate-200"
                   name="password"
                   type="password"
                   value={form.password}
@@ -118,7 +119,9 @@ const Register = () => {
                 <div className="flex flex-col gap-1 w-3/5">
                   <button
                     disabled={loading}
-                    className="rounded-xl p-2 bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500"
+                    className="rounded-md p-2 text-white"
+                    style={{ backgroundColor: "#1F75FE" }}
+                    // bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500
                   >
                     Register
                   </button>
@@ -126,7 +129,7 @@ const Register = () => {
               )}
             </form>
             <div className="flex flex-col gap-1 w-3/5">
-              <button className="rounded-xl p-2 border-2 border-indigo-400">
+              <button className="rounded-md p-2 border-2 border-indigo-400">
                 Continue With Google
               </button>
             </div>

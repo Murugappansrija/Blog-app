@@ -17,18 +17,18 @@ const HeaderBar = () => {
       <div className="flex justify-between  p-4 border-b-2">
         <div className="flex items-center">
           <Link to="/">
-            <span className="sm:font-semibold px-6 py-2 bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% rounded-2xl">
+            <span className=" text-white sm:font-semibold px-6 py-2 bg-gradient-to-r from-indigo-500 from-10% via-sky-500 via-30% to-emerald-500 to-90% rounded-md">
               Dhesandri
             </span>
           </Link>
         </div>
         <form className="flex items-center">
           <input
-            className="px-4 py-2  bg-gray-100 rounded hidden sm:inline border-2 border-indigo-600 "
+            className="px-4 py-2  bg-gray-100 rounded hidden sm:inline border-2 border-indigo-400 "
             placeholder="Search..."
           />
         </form>
-        <button className="p-3 bg-gray-100 rounded-2xl sm:hidden">
+        <button className="p-3 bg-gray-100 rounded-md sm:hidden">
           <AiOutlineSearch />
         </button>
         <div className="flex items-center mt-1 hidden sm:inline">
@@ -36,7 +36,7 @@ const HeaderBar = () => {
             to="/"
             className={`m-2 ${
               path === "/"
-                ? "px-3 py-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl"
+                ? "px-3 py-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-md"
                 : ""
             }`}
           >
@@ -46,7 +46,7 @@ const HeaderBar = () => {
             to="/project"
             className={`m-2 ${
               path === "/project"
-                ? "px-3 py-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl px-2 py-1"
+                ? "px-3 py-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-md px-2 py-1"
                 : ""
             }`}
           >
@@ -56,7 +56,7 @@ const HeaderBar = () => {
             to="/about"
             className={`m-2 ${
               path === "/about"
-                ? "px-3 py-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl"
+                ? "px-3 py-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-md"
                 : ""
             }`}
           >
@@ -64,14 +64,14 @@ const HeaderBar = () => {
           </Link>
         </div>
         <div className="flex items-center">
-          <button className="p-3 bg-gray-100 rounded-2xl mx-2 md:inline hidden sm:inline border-2 border-indigo-600 ">
+          <button className="p-3 bg-gray-100 rounded-md mx-2 md:inline hidden sm:inline border-2 border-indigo-400 ">
             <BsMoonStars />
           </button>
-          <button className="px-4 py-2 mx-2  bg-gray-100 rounded-2xl border-2 border-indigo-600 ">
+          <button className="px-4 py-2 mx-2  bg-gray-100 rounded-md border-2 border-indigo-400 ">
             <Link to="/login">Log In</Link>
           </button>
           <button
-            className="p-3 bg-gray-100 rounded-2xl mx-2 inline sm:hidden "
+            className="p-3 bg-gray-100 rounded-md mx-2 inline sm:hidden "
             onClick={handleMenu}
           >
             <GiHamburger className="font-bold" />
@@ -80,25 +80,34 @@ const HeaderBar = () => {
       </div>
       {menu && (
         <div className="flex flex-col items-center bg-slate-100 sm:hidden ">
-          <Link to="/"  className={`m-2 ${
+          <Link
+            to="/"
+            className={`m-2 ${
               path === "/"
-                ? "px-3 py-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl"
+                ? "px-3 py-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-md"
                 : ""
-            }`}>
+            }`}
+          >
             Home
           </Link>
-          <Link to="/project" className={`m-2 ${
+          <Link
+            to="/project"
+            className={`m-2 ${
               path === "/project"
-                ? "px-3 py-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl px-2 py-1"
+                ? "px-3 py-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-md px-2 py-1"
                 : ""
-            }`}>
+            }`}
+          >
             Blogs
           </Link>
-          <Link to="/about" className={`m-2 ${
+          <Link
+            to="/about"
+            className={`m-2 ${
               path === "/about"
-                ? "px-3 py-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl"
+                ? "px-3 py-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-md"
                 : ""
-            }`}>
+            }`}
+          >
             About
           </Link>
         </div>

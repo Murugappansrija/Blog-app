@@ -2,6 +2,7 @@ import { Types } from "mongoose";
 import UserModel from "../model/userModel.js";
 import Response from "./../utils/response.js";
 import bcrypt from "bcrypt";
+import jsonwebtoken from "jsonwebtoken";
 const userController = {
   /**Get All Users */
 
@@ -224,6 +225,68 @@ const userController = {
     }
   },
 
+  /**Login user */
+  logIn: async (req, res) => {
+    try {
+      const { email_id, password } = req.body;
+      if (!email_id || !password || email_id === "" || password === "") {
+        return userController.sendResponse(
+          res,
+          400,
+          "Invalid Data Format Please Check",
+          req.body
+        );
+      }
+      const isExistUser = await UserModel.findOne({ email_id });
+
+      if (!isExistUser) {
+        return userController.sendResponse(
+          res,
+          404,
+          "Invalid Credential",
+          req.body
+        );
+      }
+      const isValidPassword = await bcrypt.compare(
+        password,
+        isExistUser.password
+      );
+      if (!isValidPassword) {
+        return userController.sendResponse(
+          res,
+          404,
+          "Invalid credentials ",
+          req.body
+        );
+      }
+
+      const token = await jsonwebtoken.sign(
+        { ID: isExistUser._id },
+        process.env.JWT_SECRET_KEY,
+        { expiresIn: "10d" }
+      );
+      res.cookie("AccToken", token, { httpOnly: true });
+
+      isExistUser.password = undefined;
+
+      const data = { isExistUser, token };
+
+      return userController.sendResponse(
+        res,
+        200,
+        "Logged in successfully",
+        data
+      );
+    } catch (error) {
+      return userController.sendResponse(
+        res,
+        500,
+        "Internal Server Error Kindly Please Check!..",
+        error.message
+      );
+    }
+  },
+
   /**Response */
   sendResponse: (dataResponse, statusCode, message, data) => {
     const response = new Response(statusCode, message, data);
@@ -247,4 +310,5 @@ export const {
   getUserByID,
   updateUserByID,
   deleteUserByID,
+  logIn,
 } = userController;
