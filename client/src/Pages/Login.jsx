@@ -1,5 +1,11 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {
+  logInStart,
+  logInSuccess,
+  logInFailure,
+} from "../redux/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Login = () => {
   const [form, setForm] = useState({
@@ -7,9 +13,10 @@ const Login = () => {
     password: "",
   });
   const [visible, setVisible] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [loading, setLoading] = useState(false);
+
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { errorMessage, loading } = useSelector((state) => state.user);
   const handleOnChange = ({ target }) => {
     const { name, value } = target;
     setForm({ ...form, [name]: value });
@@ -18,16 +25,17 @@ const Login = () => {
     setVisible(!visible);
   };
 
-  const errorHelper = (message, sec ) => {
-    setErrorMessage(message);
+  const errorHelper = (message, sec) => {
+    dispatch(logInFailure(message));
     setTimeout(() => {
-      setErrorMessage(null);
+      dispatch(logInFailure(null));
     }, sec);
   };
   const handleOnSubmit = async (e) => {
     e.preventDefault();
     const url = "http://localhost:4000/user/signIn";
     try {
+      dispatch(logInStart);
       if (
         !form.password ||
         !form.email_id ||
@@ -36,8 +44,7 @@ const Login = () => {
       ) {
         return errorHelper("Fill Fields", 2000);
       }
-   
-     
+
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -48,14 +55,17 @@ const Login = () => {
 
       const data = await response.json();
       if (data.statusCode === 404) {
-        return errorHelper("Invalid Credentials",2000);
+        return errorHelper("Invalid Credentials", 2000);
       }
+      // if(data.statusCode === 400){
+      //   return errorHelper("Invalid email id",3000)
+      // }
       if (data.statusCode === 200) {
+        dispatch(logInSuccess(data));
         navigate("/");
       }
     } catch (error) {
-      errorHelper("Something went to Wrong");
-      setLoading(false);
+      errorHelper("Something went to Wrong", 2000);
     }
   };
   return (
